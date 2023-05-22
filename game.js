@@ -12,6 +12,11 @@ $(document).keydown(function (e) {
 });
 
 $(".btn").click(function (e) { 
+    if(ifStarted === false){
+        setTimeout(nextSequence,300);
+        ifStarted = true;
+        return;
+    }
     var clickId = e.target.id;
     blinkButton(clickId);
     playerSequence.push(clickId); 
