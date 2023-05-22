@@ -1,7 +1,16 @@
 var buttonColors = ["red", "blue", "green","yellow"]
 var playerSequence =[];
 var gameSequence = ["yellow"];
+var level = 0;
+var ifStarted = false;
 
+
+if(ifStarted === false){
+    $("document").keydown(function (e) { 
+        nextSequence();
+        ifStarted = true;
+    });
+}
 
 $(".btn").click(function (e) { 
     var clickId = e.target.id;
@@ -13,22 +22,21 @@ $(".btn").click(function (e) {
 
 
 
-
-
-
 function nextSequence(){
     var randomNum = Math.floor(Math.random()*4)
     var nextButton = buttonColors[randomNum];
     blinkButton(nextButton);
     gameSequence.push(nextButton);
+    changeLevel(level);
+    level++;
 
 }
 
 function blinkButton(nextBtn){
     playSound(nextBtn)
-    $("."+nextBtn).addClass('pressed',1000);
+    $("."+nextBtn).addClass('pressed');
     setTimeout(function(){
-        $("."+nextBtn).removeClass('pressed',1000);
+        $("."+nextBtn).removeClass('pressed');
     }, 100);
 }
 function playSound(btn){
@@ -39,19 +47,31 @@ function checkAnswer(playerSqn,gameSqn){
     let result;
     for (let i = 0; i < playerSqn.length; i++) {
         if(playerSqn[i] === gameSqn[i]){
-            result= true;
+            result = true;
         }
         else{
-            result= false;
+            result = false;
         }
     }
-    if(result === true){
-        console.log("good");
-        playerSequence = [];
-        setTimeout(nextSequence, 1000);
+    if(result === false){
+        console.log("bad");
+        resetSequence(playerSqn);
+        resetGame(gameSqn)
     }
-    else{
-        console.log("You lost");
+    else if(result === true && gameSqn.length === playerSqn.length){
+        console.log("good");
+        setTimeout(nextSequence, 1000);
+        resetSequence(playerSqn);
     }
 }
-function resetSequence(){}
+function resetSequence(playerSqn){
+    playerSqn.length = 0;
+}
+function changeLevel(lvl){
+    $("h1").text(lvl + " Level");
+}
+function resetGame(gameSqn, lvl){
+    gameSqn.length = 0;
+    level = 0;
+    $("h1").text("Press Any Key to Start");
+}
