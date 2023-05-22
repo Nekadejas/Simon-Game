@@ -1,16 +1,15 @@
 var buttonColors = ["red", "blue", "green","yellow"]
 var playerSequence =[];
-var gameSequence = ["yellow"];
+var gameSequence = [];
 var level = 0;
 var ifStarted = false;
 
-
-if(ifStarted === false){
-    $("document").keydown(function (e) { 
+$(document).keydown(function (e) { 
+    if(ifStarted === false){
         nextSequence();
         ifStarted = true;
-    });
-}
+    }
+});
 
 $(".btn").click(function (e) { 
     var clickId = e.target.id;
@@ -74,4 +73,5 @@ function resetGame(gameSqn, lvl){
     gameSqn.length = 0;
     level = 0;
     $("h1").text("Press Any Key to Start");
+    ifStarted = false;
 }
