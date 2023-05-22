@@ -54,6 +54,7 @@ function checkAnswer(playerSqn,gameSqn){
     }
     if(result === false){
         console.log("bad");
+        gameOver();
         resetSequence(playerSqn);
         resetGame(gameSqn)
     }
@@ -72,6 +73,12 @@ function changeLevel(lvl){
 function resetGame(gameSqn, lvl){
     gameSqn.length = 0;
     level = 0;
-    $("h1").text("Press Any Key to Start");
+    $("h1").text("Game Over. Press Any Key to Start");
     ifStarted = false;
+}
+function gameOver(){
+    $("body").addClass("game-over");
+    setTimeout(function(){
+        $("body").removeClass("game-over");
+    },400)
 }
